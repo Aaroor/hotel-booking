@@ -1,7 +1,7 @@
 version: '3'
 services:
   mysql-standalone:
-    image: 'mysql:latest'
+    image: 'mysql:5.7'
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_PASSWORD=root
@@ -11,7 +11,7 @@ services:
   springboot-docker-container:
     image: springboot-docker-container
     ports:
-      - "8080:8080"
+      - "80:80"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/demo?autoReconnect=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: "root"

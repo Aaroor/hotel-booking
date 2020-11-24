@@ -1,3 +1,5 @@
+server:
+  port: 80
 spring:
   datasource:
     username: root
@@ -5,6 +7,9 @@ spring:
     url: jdbc:mysql://localhost:3306/test
     driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
     generate-ddl: true
     hibernate:
       ddl-auto: update
