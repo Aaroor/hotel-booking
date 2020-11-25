@@ -1,5 +1,8 @@
 server:
   port: 80
+  tomcat:
+    remoteip:
+      protocol-header: x-forwarded-for
 spring:
   datasource:
     username: root
@@ -14,3 +17,4 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  
