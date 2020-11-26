@@ -18,10 +18,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
         .authorizeRequests()
-            .antMatchers("/","/login","/home", "/about","/css/**","/webjars/**","/403").permitAll()
+            .antMatchers("/","/login*","/home", "/about","/css/**","/webjars/**","/403").permitAll()
             .antMatchers("/admin/**").hasAnyRole("ADMIN")
             .antMatchers("/user/**").hasAnyRole("USER")
             .anyRequest().authenticated()
+        .and()
+        .requiresChannel().anyRequest().requiresSecure()
+        .and()
+        .portMapper().http(80).mapsTo(443)
         .and()
         .formLogin()
             .loginPage("/login")
@@ -31,6 +35,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
         .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+		
+		//http.requiresChannel().anyRequest().requiresSecure();
 	}
 	
 	// create two users, admin and user
