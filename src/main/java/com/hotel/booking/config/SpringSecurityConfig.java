@@ -18,21 +18,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	// custom 403 access denied handler
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.csrf().disable().authorizeRequests()
 				.antMatchers("/", "/login", "/home", "/about", "/css/**", "/webjars/**", "/403").permitAll()
 				.antMatchers("/admin/**").hasAnyRole("ADMIN").antMatchers("/user/**").hasAnyRole("USER").anyRequest()
-				.authenticated().and()
-				// .requiresChannel().anyRequest().requiresSecure()
-				.formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().exceptionHandling()
-				.accessDeniedHandler(accessDeniedHandler)
+				.authenticated()
 				.and()
-                .csrf().disable()
-                .requiresChannel()		//config request to use the mapping to a required channel
-					.anyRequest().requiresSecure();
-		
-		http
-        .portMapper()
-			.http(80).mapsTo(443);
+				.formLogin().loginPage("/login").permitAll().and().logout().permitAll().and().exceptionHandling()
+				.accessDeniedHandler(accessDeniedHandler);
 
 		// http.requiresChannel().anyRequest().requiresSecure();
 	}
